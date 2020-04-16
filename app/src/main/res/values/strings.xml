@@ -1,0 +1,80 @@
+<resources>
+    <string name="app_name">Reach2Patient</string>
+    <string name="tab_text_1">Home</string>
+    <string name="tab_text_2">Donate Blood</string>
+    <string name="tab_text_3">Request Blood</string>
+    <string name="home_main_head">What is Corona Virus?</string>
+    <string name="home_para1">Corona viruses are a large family of viruses which may cause illness in animals or humans. In humans, several coronaviruses are known to cause respiratory infections ranging from the common cold to more severe diseases such as Middle East Respiratory Syndrome (MERS) and Severe Acute Respiratory Syndrome (SARS). The most recently discovered corona virus causes corona virus disease COVID-19.</string>
+    <string name="home_sub_head1">How we can help others?</string>
+    <string name="home_para2">You can help patients with a severe condition of COVID by donating antibodies in your blood. If you have recovered from COVID-19, you can help other patients by donating your blood. The antibodies developed in your blood will help fight the virus in other patient\'s bodies.</string>
+    <string name="home_sub_head2">Do I Need a Test?</string>
+    <string name="home_para3">Here is some advice from the experts about the right time to get tested for COVID-19</string>
+    <string name="home_sub_head3">Maintain Social Distancing</string>
+    <string name="home_para4">Social distancing in a market place during COVID-19 in English and Hindi</string>
+    <string name="home_sub_head4">Expert Advice</string>
+    <string name="home_para5">Let\'s see what experts have to say about staying indoors and healthy practices.</string>
+    <string name="home_footer">Your data is saved in a secure environment \nthat will be reached by hospital and analysis staff on a need to know basis.</string>
+    <string name="univ_footer">© 2020 IIIT-D initiative.\nThis app is for a non-profit purpose, refrain from misusing.</string>
+    <string name="donate_main_head">Connect to Hospital</string>
+    <string name="donate_para1">We are making a non-profit attempt of saving lives by making a pool of contact numbers to facilitate availability for blood/antibody donation for hospitals. You will be contacted by relevant hospitals. If you do not want to provide your own mobile number, it is OK. You can provide the mobile number of your friend/guardian who can inform you. However, for blood transfusion, you will have to visit the hospital yourself.</string>
+    <string name="donate_field1">Age</string>
+    <string name="donate_hint1">Enter your age</string>
+    <string name="donate_field2">Recovery Status</string>
+    <string-array name="donate_recovery">
+        <item>Recovered patient</item>
+        <item>Not infected</item>
+    </string-array>
+    <string name="donate_field3">Blood Group</string>
+    <string-array name="donate_bgroup">
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>O+</item>
+        <item>O-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+    </string-array>
+    <string name="donate_field4">Phone</string>
+    <string name="donate_hint4">Enter your phone</string>
+    <string name="donate_field5">City</string>
+    <string name="donate_hint5">Enter your city</string>
+    <string name="donate_button">Submit</string>
+    <string name="donate_footer">Kindly do not entertain phone calls on this issue from any individual until it comes from a hospital. For your safety, try using your own transportation system to go to the hospital which contacted you for blood.</string>
+    <string name="request_main_head">Inform Us</string>
+    <string name="request_para1">We are making a non-profit attempt of saving lives by making a pool of contact numbers to facilitate availability for blood/antibody donation for hospitals. We will send relevant contact information to your hospital. Kindly give your contact number and your hospitals contact info (email id is optional). We do not need your personal details.</string>
+    <string name="request_field1">Age</string>
+    <string name="request_hint1">Enter your age</string>
+    <string name="request_field2">Recovery Status</string>
+    <string-array name="request_recovery">
+        <item>Recovered patient</item>
+        <item>Others</item>
+    </string-array>
+    <string name="request_field3">Blood Group</string>
+    <string-array name="request_bgroup">
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>O+</item>
+        <item>O-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+    </string-array>
+    <string name="request_field4">Phone</string>
+    <string name="request_hint4">Enter phone</string>
+    <string name="request_field5">Hospital\'s Phone</string>
+    <string name="request_hint5">Enter hospital\'s phone</string>
+    <string name="request_field6">Hospital\'s email</string>
+    <string name="request_hint6">Enter hospital\'s email</string>
+    <string name="request_field7">City</string>
+    <string name="request_hint7">Enter your city</string>
+    <string name="request_button">Submit</string>
+    <string name="request_footer">You may want to post your need for blood plasma on our dashboard, and maybe you get some help. However, always meet or call the potential donor only in a hospital, as he could be having an infection.</string>
+    <string name="main_menu_item1">FAQ</string>
+    <string name="main_menu_item2">Contact</string>
+    <string name="main_menu_item3">T &amp; Cs</string>
+    <string name="main_menu_item4">Consent Letter</string>
+    <string name="main_menu_item5">Share</string>
+    <string name="main_menu_item6">Make a Call</string>
+</resources>

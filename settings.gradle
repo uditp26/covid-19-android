@@ -1,0 +1,2 @@
+rootProject.name='Reach2Patient'
+include ':app'
