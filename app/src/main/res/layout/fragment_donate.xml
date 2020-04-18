@@ -53,6 +53,7 @@
                     android:text="@string/donate_field1" />
 
                 <EditText
+                    android:id="@+id/donate_age"
                     android:layout_width="200dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
@@ -117,6 +118,7 @@
                     android:text="@string/donate_field4" />
 
                 <EditText
+                    android:id="@+id/donate_phone"
                     android:layout_width="200dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
@@ -141,6 +143,7 @@
                     android:text="@string/donate_field5" />
 
                 <EditText
+                    android:id="@+id/donate_city"
                     android:layout_width="200dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
@@ -160,6 +163,7 @@
                 android:gravity="center">
 
                 <Button
+                    android:id="@+id/donate_submit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/donate_button"

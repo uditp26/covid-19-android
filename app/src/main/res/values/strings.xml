@@ -77,4 +77,23 @@
     <string name="main_menu_item4">Consent Letter</string>
     <string name="main_menu_item5">Share</string>
     <string name="main_menu_item6">Make a Call</string>
+    <string name="post_main_head">Post Your Need of Plasma</string>
+    <string name="post_para1">You can post about your need for blood plasma here. This will let others know about your need and extend a helping hand. You can also see posts by other people below the form. But do not rely entirely on posting your advertisement here. You should also try your best to connect to different hospitals which have treated corona patients.</string>
+    <string name="post_field1">Content</string>
+    <string name="post_hint1">Enter post here</string>
+    <string name="post_field2">Name</string>
+    <string name="post_hint2">Enter name</string>
+    <string name="post_field3">Email</string>
+    <string name="post_hint3">Enter email</string>
+    <string name="post_field4">Phone</string>
+    <string name="post_hint4">Enter phone</string>
+    <string name="post_field5">City</string>
+    <string name="post_hint5">Enter city</string>
+    <string name="post_field6">State</string>
+    <string name="post_hint6">Enter state</string>
+    <string name="post_field7">Country</string>
+    <string name="post_hint7">Enter country</string>
+    <string name="post_button">Submit</string>
+    <string name="post_sub_head">Posts</string>
+    <string name="post_para2">You can search for posts country-wise. Please refer to the Country form field above for naming conventions (e.g. instead of US, use United States).</string>
 </resources>

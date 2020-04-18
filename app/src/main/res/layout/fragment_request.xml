@@ -53,6 +53,7 @@
                     android:text="@string/request_field1" />
 
                 <EditText
+                    android:id="@+id/request_age"
                     android:layout_width="200dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
@@ -117,6 +118,7 @@
                     android:text="@string/request_field4" />
 
                 <EditText
+                    android:id="@+id/request_phone"
                     android:layout_width="200dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
@@ -141,6 +143,7 @@
                     android:text="@string/request_field5" />
 
                 <EditText
+                    android:id="@+id/request_hphone"
                     android:layout_width="200dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
@@ -165,6 +168,7 @@
                     android:text="@string/request_field6" />
 
                 <EditText
+                    android:id="@+id/request_hemail"
                     android:layout_width="200dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
@@ -189,6 +193,7 @@
                     android:text="@string/request_field7" />
 
                 <EditText
+                    android:id="@+id/request_city"
                     android:layout_width="200dp"
                     android:layout_height="40dp"
                     android:layout_marginLeft="10dp"
@@ -208,6 +213,7 @@
                 android:gravity="center">
 
                 <Button
+                    android:id="@+id/request_submit"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="@string/request_button"
