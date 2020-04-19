@@ -57,27 +57,33 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        Intent intent;
         switch (item.getItemId()){
             case R.id.faq:
-
-                return true;
+                intent = new Intent(getBaseContext(), FAQActivity.class);
+                startActivity(intent);
+                break;
             case R.id.contact:
-
-                return true;
+                intent = new Intent(getBaseContext(), ContactActivity.class);
+                startActivity(intent);
+                break;
             case R.id.tnc:
-
-                return true;
+                intent = new Intent(getBaseContext(), TermsActivity.class);
+                startActivity(intent);
+                break;
             case R.id.consent:
-
-                return true;
-            case R.id.share:
-
-                return true;
-            case R.id.call:
-
-                return true;
+                intent = new Intent(getBaseContext(), ConsentActivity.class);
+                startActivity(intent);
+                break;
+//            case R.id.share:
+//
+//                break;
+//            case R.id.call:
+//
+//                break;
             default:
                 return super.onOptionsItemSelected(item);
         }
+        return true;
     }
 }
