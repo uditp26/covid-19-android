@@ -17,6 +17,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+
 import androidx.appcompat.widget.Toolbar;
 
 import com.example.reach2patient.ui.main.SectionsPagerAdapter;
@@ -75,9 +76,10 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent(getBaseContext(), ConsentActivity.class);
                 startActivity(intent);
                 break;
-//            case R.id.share:
-//
-//                break;
+            case R.id.test:
+                intent = new Intent(getBaseContext(), TestActivity.class);
+                startActivity(intent);
+                break;
 //            case R.id.call:
 //
 //                break;

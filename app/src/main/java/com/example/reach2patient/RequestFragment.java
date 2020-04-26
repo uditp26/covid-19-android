@@ -20,13 +20,30 @@ import androidx.fragment.app.Fragment;
 
 import java.util.Objects;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class RequestFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private static final String TAG = "RequestFragment";
 
+    private static final String BASE_URL = "http://192.168.1.7:8000/login/";
+
     private EditText ageET, phoneET, cityET, hphoneET, hemailET;
     private Spinner bloodGroupSp, recoveryStatusSp;
-    private Button submit;
+
+    private int age;
+    private long phone, hphone;
+    private String hemail = null;
+    private String city = null;
+    private String bloodGroup = null;
+
+    private Boolean recoveryStatus;
+
+    private Reach2PatientApi r2pApi;
 
     public static RequestFragment newInstance(){
         RequestFragment fragment = new RequestFragment();
@@ -36,7 +53,6 @@ public class RequestFragment extends Fragment implements AdapterView.OnItemSelec
         return fragment;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -58,8 +74,15 @@ public class RequestFragment extends Fragment implements AdapterView.OnItemSelec
         hphoneET = view.findViewById(R.id.request_hphone);
         hemailET = view.findViewById(R.id.request_hemail);
 
-        submit = view.findViewById(R.id.request_submit);
+        Button submit = view.findViewById(R.id.request_submit);
         submit.setOnClickListener(this);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        r2pApi = retrofit.create(Reach2PatientApi.class);
 
         return view;
     }
@@ -76,11 +99,7 @@ public class RequestFragment extends Fragment implements AdapterView.OnItemSelec
 
     @Override
     public void onClick(View view) {
-        int age;
-        long phone, hphone;
-        String hemail = null, city = null, bloodGroup = null, recoveryStatusText = null;
 
-        short recoveryStatus;
 
         try {
             age = Integer.parseInt(ageET.getText().toString());
@@ -90,21 +109,49 @@ public class RequestFragment extends Fragment implements AdapterView.OnItemSelec
             city = cityET.getText().toString();
             bloodGroup = bloodGroupSp.getSelectedItem().toString();
 
-            recoveryStatusText  = recoveryStatusSp.getSelectedItem().toString();
+            String recoveryStatusText = recoveryStatusSp.getSelectedItem().toString();
 
             if (recoveryStatusText.compareTo("Recovered patient") == 0){
-                recoveryStatus = 1;
+                recoveryStatus = true;
             }
             else{
-                recoveryStatus = 0;
+                recoveryStatus = false;
             }
+
+            submitRequestForm();
         }
         catch (Exception e){
             Log.e(TAG, "onClick: " + e.getMessage());
             Toast.makeText(getActivity(), "Missing field value", Toast.LENGTH_SHORT).show();
         }
 
-        Log.d(TAG, "onClick: " + city);
-
     }
+
+    private void submitRequestForm(){
+        Request formData = new Request(age, recoveryStatus, bloodGroup, phone, hphone, hemail, city);
+
+        Call<Request> call = r2pApi.submitRequestForm(formData);
+
+        call.enqueue(new Callback<Request>() {
+            @Override
+            public void onResponse(Call<Request> call, Response<Request> response) {
+
+                if (!response.isSuccessful()) {
+                    Log.e(TAG, "onResponse: Error: " + response.raw());
+                    return;
+                }
+
+                Request donateResponse = response.body();
+
+                Log.d(TAG, "RequestForm Id: " + donateResponse.getId());
+
+            }
+
+            @Override
+            public void onFailure(Call<Request> call, Throwable t) {
+                Log.e(TAG, "onFailure: " + t.getMessage());
+            }
+        });
+    }
+
 }

@@ -78,6 +78,16 @@
             android:textStyle="normal"
             android:text="@string/home_para3"/>
 
+        <Button
+            android:id="@+id/applyTest_home"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="10dp"
+            android:text="@string/home_testButton"
+            android:textColor="@color/primaryTextColor"
+            android:background="@color/secondaryLightColor"/>
+
         <TextView
             android:id="@+id/sub_head3_home"
             android:layout_width="wrap_content"

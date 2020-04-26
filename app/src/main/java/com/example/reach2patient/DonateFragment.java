@@ -18,15 +18,32 @@ import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Objects;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class DonateFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
     private static final String TAG = "DonateFragment";
 
+    private static final String BASE_URL = "http://192.168.1.7:8000/login/";
+
     private EditText ageET, phoneET, cityET;
     private Spinner bloodGroupSp, recoveryStatusSp;
-    private Button submit;
+
+    private int age;
+    private long phone;
+    private String city = null;
+    private String bloodGroup = null;
+    private Boolean recoveryStatus;
+
+    private Reach2PatientApi r2pApi;
 
     public static DonateFragment newInstance(){
         DonateFragment fragment = new DonateFragment();
@@ -36,7 +53,6 @@ public class DonateFragment extends Fragment implements AdapterView.OnItemSelect
         return fragment;
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -56,8 +72,15 @@ public class DonateFragment extends Fragment implements AdapterView.OnItemSelect
         cityET = view.findViewById(R.id.donate_city);
         phoneET = view.findViewById(R.id.donate_phone);
 
-        submit = view.findViewById(R.id.donate_submit);
+        Button submit = view.findViewById(R.id.donate_submit);
         submit.setOnClickListener(this);
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        r2pApi = retrofit.create(Reach2PatientApi.class);
 
         return view;
     }
@@ -74,30 +97,55 @@ public class DonateFragment extends Fragment implements AdapterView.OnItemSelect
 
     @Override
     public void onClick(View view) {
-        int age ;
-        long phone;
-        String city = null, bloodGroup = null, recoveryStatusText = null;
-        short recoveryStatus;
+
         try {
             age = Integer.parseInt(ageET.getText().toString());
             phone = Long.parseLong(phoneET.getText().toString());
             city = cityET.getText().toString();
             bloodGroup = bloodGroupSp.getSelectedItem().toString();
 
-            recoveryStatusText = recoveryStatusSp.getSelectedItem().toString();
+            String recoveryStatusText = recoveryStatusSp.getSelectedItem().toString();
 
             if (recoveryStatusText.compareTo("Recovered patient") == 0){
-                recoveryStatus = 1;
+                recoveryStatus = true;
             }
             else{
-                recoveryStatus = 0;
+                recoveryStatus = false;
             }
+
+            submitDonateForm();
         }
         catch (Exception e){
             Log.e(TAG, "onClick: " + e.getMessage());
             Toast.makeText(getActivity(), "Missing field value", Toast.LENGTH_SHORT).show();
         }
-
-        Log.d(TAG, "onClick: " + city);
     }
+
+    private void submitDonateForm(){
+        Donate formData = new Donate(age, recoveryStatus, bloodGroup, phone, city);
+
+        Call<Donate> call = r2pApi.submitDonateForm(formData);
+
+        call.enqueue(new Callback<Donate>() {
+            @Override
+            public void onResponse(Call<Donate> call, Response<Donate> response) {
+
+                if (!response.isSuccessful()) {
+                    Log.e(TAG, "onResponse: Error: " + response.raw());
+                    return;
+                }
+
+                Donate donateResponse = response.body();
+
+                Log.d(TAG, "DonateForm Id: " + donateResponse.getId());
+
+            }
+
+            @Override
+            public void onFailure(Call<Donate> call, Throwable t) {
+                Log.e(TAG, "onFailure: " + t.getMessage());
+            }
+        });
+    }
+
 }

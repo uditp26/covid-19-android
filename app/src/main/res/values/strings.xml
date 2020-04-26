@@ -8,6 +8,7 @@
     <string name="home_sub_head1">How we can help others?</string>
     <string name="home_para2">You can help patients with a severe condition of COVID by donating antibodies in your blood. If you have recovered from COVID-19, you can help other patients by donating your blood. The antibodies developed in your blood will help fight the virus in other patient\'s bodies.</string>
     <string name="home_sub_head2">Do I Need a Test?</string>
+    <string name="home_testButton">Apply for Test</string>
     <string name="home_para3">Here is some advice from the experts about the right time to get tested for COVID-19</string>
     <string name="home_sub_head3">Maintain Social Distancing</string>
     <string name="home_para4">Social distancing in a market place during COVID-19 in English and Hindi</string>
@@ -75,7 +76,7 @@
     <string name="main_menu_item2">Contact</string>
     <string name="main_menu_item3">T&amp;Cs</string>
     <string name="main_menu_item4">Consent Letter</string>
-<!--    <string name="main_menu_item5">Share</string>-->
+    <string name="main_menu_item5">Apply for Test</string>
 <!--    <string name="main_menu_item6">Make a Call</string>-->
     <string name="post_main_head">Post Your Need of Plasma</string>
     <string name="post_para1">You can post about your need for blood plasma here. This will let others know about your need and extend a helping hand. You can also see posts by other people below the form. But do not rely entirely on posting your advertisement here. You should also try your best to connect to different hospitals which have treated corona patients.</string>
@@ -119,4 +120,13 @@
     <string name="terms_para4">3. After 4 months  of  receiving  the  phone  number  of  volunteers,  you  will  delete  those  phone numbers to avoid any misuse. In case of any misuse of phone numbers is found or reported, your organisation will listed in blacklist, and it will not receive and support from us.</string>
     <string name="terms_para5">4. You  will  not  follow  the  volunteers  to  the  point  that  they  feel  harassed  by  you  or  your organisation. Any complaint from volunteers will again hint us to stop support for you.</string>
     <string name="terms_para6">5. If  a  volunteer  ask  us  to  delete  his  number  from  our  list,  we  will  inform you  and  your organisationand wewill also delete his respective contact information from our database. It is  to  make  sure  that  the  volunteers  do  not  feel  harassed  and  chased. Once  asked,  your organisation should also delete those contact numbers from your database.</string>
+    <string name="test_main_head">Apply for Test</string>
+    <string name="test_para1">Please fill those details, and we will contact you as soon as possible. We just make a pool of contact numbers to facilitate availability for blood/antibody donation for hospitals. If you do not want to provide your own mobile number, it is okay. You can provide the mobile number of your friend/guardian who can inform you. However, for test yourself you will have to visit the hospital yourself.</string>
+    <string name="test_field1">Age</string>
+    <string name="test_hint1">Enter age</string>
+    <string name="test_field2">Phone</string>
+    <string name="test_hint2">Enter phone</string>
+    <string name="test_field3">City</string>
+    <string name="test_hint3">Enter city</string>
+    <string name="test_button">Submit</string>
 </resources>
