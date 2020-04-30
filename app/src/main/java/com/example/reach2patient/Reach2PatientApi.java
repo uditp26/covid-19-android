@@ -28,4 +28,7 @@ public interface Reach2PatientApi {
     @POST("tests/")
     Call<Test> submitTestForm(@Body Test formData);
 
+    @POST("deletions/")
+    Call<Delete> submitDeleteRequest(@Body Delete formData);
+
 }

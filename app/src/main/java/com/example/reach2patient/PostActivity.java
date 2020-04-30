@@ -1,5 +1,7 @@
 package com.example.reach2patient;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -26,8 +28,6 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
     private static final String TAG = "PostActivity";
     private static final String BASE_URL = "http://192.168.1.7:8000/login/";
 
-    private EditText nameET;
-
     private EditText emailET, postET, phoneET, cityET, stateET, countryET;
 
     private String body = null, email = null, city = null, state = null, country = null;
@@ -44,7 +44,6 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
 
-//        nameET = findViewById(R.id.post_name);
         emailET = findViewById(R.id.post_email);
         postET = findViewById(R.id.post_content);
         phoneET = findViewById(R.id.post_phone);
@@ -61,8 +60,6 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                 .build();
 
         r2pApi = retrofit.create(Reach2PatientApi.class);
-
-        getPosts();
     }
 
     @Override
@@ -81,14 +78,21 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
         try {
             body = postET.getText().toString();
-//            name = nameET.getText().toString();
             email = emailET.getText().toString();
             phone = Long.parseLong(phoneET.getText().toString());
             city = cityET.getText().toString();
             state = stateET.getText().toString();
             country = countryET.getText().toString();
 
-            createPost();
+            boolean status = createPost();
+
+            if (status){
+                clearForm();
+                Toast.makeText(this, "Post created", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(this, "Check network connection", Toast.LENGTH_SHORT).show();
+            }
         }
         catch (Exception e){
             Log.e(TAG, "onClick: " + e.getMessage());
@@ -96,54 +100,49 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
         }
     }
 
-    private void getPosts(){
-        Call<List<Post>> call = r2pApi.getPosts();
+    private boolean createPost() {
+        if (isNetworkConnected()){
+            Post post = new Post(body, email, phone, city, state, country);
 
-        call.enqueue(new Callback<List<Post>>() {
-            @Override
-            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
-                if (!response.isSuccessful()){
-                    Log.e(TAG, "onResponse: Error: " + response.raw());
-                    return;
+            Call<Post> call = r2pApi.createPost(post);
+
+            call.enqueue(new Callback<Post>() {
+                @Override
+                public void onResponse(Call<Post> call, Response<Post> response) {
+
+                    if (!response.isSuccessful()){
+                        Log.e(TAG, "onResponse: Error: " + response.raw());
+                        return;
+                    }
+
+                    Post postResponse = response.body();
+
+                    Log.d(TAG, "Post Id: " + postResponse.getId());
                 }
 
-                List<Post> posts = response.body();
-
-                for (Post post : posts){
-                    Log.d(TAG, "Post Id: " + post.getId());
+                @Override
+                public void onFailure(Call<Post> call, Throwable t) {
+                    Log.e(TAG, "onFailure: " + t.getMessage());
                 }
-            }
-
-            @Override
-            public void onFailure(Call<List<Post>> call, Throwable t) {
-                Log.e(TAG, "onFailure: " + t.getMessage());
-            }
-        });
+            });
+            return true;
+        }
+        return false;
     }
 
-    private void createPost() {
-        Post post = new Post(body, email, phone, city, state, country);
-
-        Call<Post> call = r2pApi.createPost(post);
-
-        call.enqueue(new Callback<Post>() {
-            @Override
-            public void onResponse(Call<Post> call, Response<Post> response) {
-
-                if (!response.isSuccessful()){
-                    Log.e(TAG, "onResponse: Error: " + response.raw());
-                    return;
-                }
-
-                Post postResponse = response.body();
-
-                Log.d(TAG, "Post Id: " + postResponse.getId());
-            }
-
-            @Override
-            public void onFailure(Call<Post> call, Throwable t) {
-                Log.e(TAG, "onFailure: " + t.getMessage());
-            }
-        });
+    private void clearForm(){
+        emailET.setText(null);
+        cityET.setText(null);
+        phoneET.setText(null);
+        postET.setText(null);
+        stateET.setText(null);
+        countryET.setText(null);
     }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
+
 }

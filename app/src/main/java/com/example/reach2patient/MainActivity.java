@@ -34,9 +34,14 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         SectionsPagerAdapter sectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
         ViewPager viewPager = findViewById(R.id.view_pager);
+
+        // Set the number of pages that should be retained to either side of the current page in the
+        // view hierarchy in an idle state. Pages beyond this limit will be recreated from the adapter
+        // when needed.
+        viewPager.setOffscreenPageLimit(2);
+
         viewPager.setAdapter(sectionsPagerAdapter);
         TabLayout tabs = findViewById(R.id.tabs);
-//        Log.d(TAG, "onCreate: " + String.valueOf(tabs.getTabCount()));
         tabs.setupWithViewPager(viewPager);
         FloatingActionButton fab = findViewById(R.id.add_post);
 
@@ -60,12 +65,12 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         Intent intent;
         switch (item.getItemId()){
-            case R.id.faq:
-                intent = new Intent(getBaseContext(), FAQActivity.class);
+            case R.id.test:
+                intent = new Intent(getBaseContext(), TestActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.contact:
-                intent = new Intent(getBaseContext(), ContactActivity.class);
+            case R.id.delete:
+                intent = new Intent(getBaseContext(), DeleteActivity.class);
                 startActivity(intent);
                 break;
             case R.id.tnc:
@@ -76,13 +81,12 @@ public class MainActivity extends AppCompatActivity {
                 intent = new Intent(getBaseContext(), ConsentActivity.class);
                 startActivity(intent);
                 break;
-            case R.id.test:
-                intent = new Intent(getBaseContext(), TestActivity.class);
+            case R.id.contact:
+                intent = new Intent(getBaseContext(), ContactActivity.class);
                 startActivity(intent);
                 break;
-//            case R.id.call:
-//
-//                break;
+            case R.id.refresh:
+                break;
             default:
                 return super.onOptionsItemSelected(item);
         }

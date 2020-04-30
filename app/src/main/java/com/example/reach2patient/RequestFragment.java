@@ -1,5 +1,7 @@
 package com.example.reach2patient;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -65,7 +67,7 @@ public class RequestFragment extends Fragment implements AdapterView.OnItemSelec
 
         bloodGroupSp = view.findViewById(R.id.rbgroup_spinner);
         ArrayAdapter<CharSequence> badapter = ArrayAdapter.createFromResource(Objects.requireNonNull(getActivity()), R.array.request_bgroup, android.R.layout.simple_spinner_item);
-        radapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        badapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         bloodGroupSp.setAdapter(badapter);
 
         ageET = view.findViewById(R.id.request_age);
@@ -118,7 +120,15 @@ public class RequestFragment extends Fragment implements AdapterView.OnItemSelec
                 recoveryStatus = false;
             }
 
-            submitRequestForm();
+            boolean status = submitRequestForm();
+
+            if (status){
+                clearForm();
+                Toast.makeText(getActivity(), "Request submitted", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(getActivity(), "Check network connection", Toast.LENGTH_SHORT).show();
+            }
         }
         catch (Exception e){
             Log.e(TAG, "onClick: " + e.getMessage());
@@ -127,31 +137,49 @@ public class RequestFragment extends Fragment implements AdapterView.OnItemSelec
 
     }
 
-    private void submitRequestForm(){
-        Request formData = new Request(age, recoveryStatus, bloodGroup, phone, hphone, hemail, city);
+    private boolean submitRequestForm(){
+        if(isNetworkConnected()){
+            Request formData = new Request(age, recoveryStatus, bloodGroup, phone, hphone, hemail, city);
 
-        Call<Request> call = r2pApi.submitRequestForm(formData);
+            Call<Request> call = r2pApi.submitRequestForm(formData);
 
-        call.enqueue(new Callback<Request>() {
-            @Override
-            public void onResponse(Call<Request> call, Response<Request> response) {
+            call.enqueue(new Callback<Request>() {
+                @Override
+                public void onResponse(Call<Request> call, Response<Request> response) {
 
-                if (!response.isSuccessful()) {
-                    Log.e(TAG, "onResponse: Error: " + response.raw());
-                    return;
+                    if (!response.isSuccessful()) {
+                        Log.e(TAG, "onResponse: Error: " + response.raw());
+                        return;
+                    }
+
+                    Request donateResponse = response.body();
+
+                    Log.d(TAG, "RequestForm Id: " + donateResponse.getId());
+
                 }
 
-                Request donateResponse = response.body();
+                @Override
+                public void onFailure(Call<Request> call, Throwable t) {
+                    Log.e(TAG, "onFailure: " + t.getMessage());
+                }
+            });
+            return true;
+        }
+        return false;
+    }
 
-                Log.d(TAG, "RequestForm Id: " + donateResponse.getId());
+    private void clearForm(){
+        ageET.setText(null);
+        cityET.setText(null);
+        phoneET.setText(null);
+        hphoneET.setText(null);
+        hemailET.setText(null);
+    }
 
-            }
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
 
-            @Override
-            public void onFailure(Call<Request> call, Throwable t) {
-                Log.e(TAG, "onFailure: " + t.getMessage());
-            }
-        });
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
 }

@@ -1,5 +1,7 @@
 package com.example.reach2patient;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
@@ -76,7 +78,15 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
             phone = Long.parseLong(phoneET.getText().toString());
             city = cityET.getText().toString();
 
-            submitTestForm();
+            boolean status = submitTestForm();
+
+            if (status){
+                clearForm();
+                Toast.makeText(this, "Request submitted", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(this, "Check network connection", Toast.LENGTH_SHORT).show();
+            }
 
         }
         catch (Exception e){
@@ -86,31 +96,46 @@ public class TestActivity extends AppCompatActivity implements View.OnClickListe
 
     }
 
-    private void submitTestForm(){
-        Test test = new Test(age, phone, city);
+    private boolean submitTestForm(){
+        if (isNetworkConnected()){
+            Test test = new Test(age, phone, city);
 
-        Call<Test> call = r2pApi.submitTestForm(test);
+            Call<Test> call = r2pApi.submitTestForm(test);
 
-        call.enqueue(new Callback<Test>() {
-            @Override
-            public void onResponse(Call<Test> call, Response<Test> response) {
+            call.enqueue(new Callback<Test>() {
+                @Override
+                public void onResponse(Call<Test> call, Response<Test> response) {
 
-                if (!response.isSuccessful()){
-                    Log.e(TAG, "onResponse: Error: " + response.raw());
-                    return;
+                    if (!response.isSuccessful()){
+                        Log.e(TAG, "onResponse: Error: " + response.raw());
+                        return;
+                    }
+
+                    Test testResponse = response.body();
+
+                    Log.d(TAG, "Post Id: " + testResponse.getId());
                 }
 
-                Test testResponse = response.body();
+                @Override
+                public void onFailure(Call<Test> call, Throwable t) {
+                    Log.e(TAG, "onFailure: " + t.getMessage());
+                }
+            });
+            return true;
+        }
+        return false;
+    }
 
-                Log.d(TAG, "Post Id: " + testResponse.getId());
-            }
+    private void clearForm(){
+        ageET.setText(null);
+        cityET.setText(null);
+        phoneET.setText(null);
+    }
 
-            @Override
-            public void onFailure(Call<Test> call, Throwable t) {
-                Log.e(TAG, "onFailure: " + t.getMessage());
-            }
-        });
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
 
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
 }

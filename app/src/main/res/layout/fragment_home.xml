@@ -1,162 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView
+<androidx.constraintlayout.widget.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="match_parent">
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_home"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:padding="4dp"
+        android:scrollbars="vertical"
+        android:background="@android:color/darker_gray"
+        android:requiresFadingEdge="vertical"
+        android:fadingEdgeLength="4dp"/>
 
-        <TextView
-            android:id="@+id/main_head_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:textSize="40sp"
-            android:textStyle="bold"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/home_main_head"/>
 
-        <TextView
-            android:id="@+id/para1_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:textSize="20sp"
-            android:textStyle="normal"
-            android:text="@string/home_para1"/>
+<!--    <TextView-->
+<!--        android:id="@+id/univ_footer_home"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        android:background="@android:color/background_dark"-->
+<!--        android:gravity="center"-->
+<!--        android:text="@string/univ_footer"-->
+<!--        android:textColor="@android:color/white"-->
+<!--        android:textSize="16sp"-->
+<!--        android:textStyle="normal" />-->
 
-        <TextView
-            android:id="@+id/sub_head1_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:textSize="40sp"
-            android:textStyle="bold"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/home_sub_head1"/>
-
-        <TextView
-            android:id="@+id/para2_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:textSize="20sp"
-            android:textStyle="normal"
-            android:text="@string/home_para2"/>
-
-        <TextView
-            android:id="@+id/sub_head2_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:textSize="40sp"
-            android:textStyle="bold"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/home_sub_head2"/>
-
-        <TextView
-            android:id="@+id/para3_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:textSize="20sp"
-            android:textStyle="normal"
-            android:text="@string/home_para3"/>
-
-        <Button
-            android:id="@+id/applyTest_home"
-            android:layout_width="200dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:layout_marginTop="10dp"
-            android:text="@string/home_testButton"
-            android:textColor="@color/primaryTextColor"
-            android:background="@color/secondaryLightColor"/>
-
-        <TextView
-            android:id="@+id/sub_head3_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:textSize="40sp"
-            android:textStyle="bold"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/home_sub_head3"/>
-
-        <TextView
-            android:id="@+id/para4_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:textSize="20sp"
-            android:textStyle="normal"
-            android:text="@string/home_para4"/>
-
-        <TextView
-            android:id="@+id/sub_head4_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:textSize="40sp"
-            android:textStyle="bold"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/home_sub_head4"/>
-
-        <TextView
-            android:id="@+id/para5_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:textSize="20sp"
-            android:textStyle="normal"
-            android:text="@string/home_para5"/>
-
-        <TextView
-            android:id="@+id/footer_home"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginStart="10dp"
-            android:textSize="16sp"
-            android:textStyle="normal"
-            android:textAppearance="?android:attr/textAppearanceLarge"
-            android:text="@string/home_footer"/>
-
-        <TextView
-            android:id="@+id/footer_uni"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:layout_marginTop="10dp"
-            android:textSize="16sp"
-            android:textStyle="normal"
-            android:text="@string/univ_footer"
-            android:textColor="@android:color/white"
-            android:background="@android:color/background_dark"/>
-
-    </LinearLayout>
-</ScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

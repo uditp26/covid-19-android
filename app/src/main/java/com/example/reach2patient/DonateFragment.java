@@ -1,5 +1,7 @@
 package com.example.reach2patient;
 
+import android.content.Context;
+import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -27,6 +29,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
+
+import static androidx.core.content.ContextCompat.getSystemService;
 
 public class DonateFragment extends Fragment implements AdapterView.OnItemSelectedListener, View.OnClickListener {
 
@@ -65,7 +69,7 @@ public class DonateFragment extends Fragment implements AdapterView.OnItemSelect
 
         bloodGroupSp = view.findViewById(R.id.dbgroup_spinner);
         ArrayAdapter<CharSequence> badapter = ArrayAdapter.createFromResource(Objects.requireNonNull(getActivity()), R.array.donate_bgroup, android.R.layout.simple_spinner_item);
-        radapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        badapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         bloodGroupSp.setAdapter(badapter);
 
         ageET = view.findViewById(R.id.donate_age);
@@ -113,7 +117,16 @@ public class DonateFragment extends Fragment implements AdapterView.OnItemSelect
                 recoveryStatus = false;
             }
 
-            submitDonateForm();
+            boolean status = submitDonateForm();
+
+            if (status){
+                clearForm();
+                Toast.makeText(getActivity(), "Details submitted", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                Toast.makeText(getActivity(), "Check network connection", Toast.LENGTH_SHORT).show();
+            }
+
         }
         catch (Exception e){
             Log.e(TAG, "onClick: " + e.getMessage());
@@ -121,31 +134,47 @@ public class DonateFragment extends Fragment implements AdapterView.OnItemSelect
         }
     }
 
-    private void submitDonateForm(){
-        Donate formData = new Donate(age, recoveryStatus, bloodGroup, phone, city);
+    private boolean submitDonateForm(){
+        if (isNetworkConnected()){
+            Donate formData = new Donate(age, recoveryStatus, bloodGroup, phone, city);
 
-        Call<Donate> call = r2pApi.submitDonateForm(formData);
+            Call<Donate> call = r2pApi.submitDonateForm(formData);
 
-        call.enqueue(new Callback<Donate>() {
-            @Override
-            public void onResponse(Call<Donate> call, Response<Donate> response) {
+            call.enqueue(new Callback<Donate>() {
+                @Override
+                public void onResponse(Call<Donate> call, Response<Donate> response) {
 
-                if (!response.isSuccessful()) {
-                    Log.e(TAG, "onResponse: Error: " + response.raw());
-                    return;
+                    if (!response.isSuccessful()) {
+                        Log.e(TAG, "onResponse: Error: " + response.raw());
+                        return;
+                    }
+
+                    Donate donateResponse = response.body();
+
+                    Log.d(TAG, "DonateForm Id: " + donateResponse.getId());
+
                 }
 
-                Donate donateResponse = response.body();
+                @Override
+                public void onFailure(Call<Donate> call, Throwable t) {
+                    Log.e(TAG, "onFailure: " + t.getMessage());
+                }
+            });
+            return true;
+        }
+        return false;
+    }
 
-                Log.d(TAG, "DonateForm Id: " + donateResponse.getId());
+    private void clearForm(){
+        ageET.setText(null);
+        cityET.setText(null);
+        phoneET.setText(null);
+    }
 
-            }
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
 
-            @Override
-            public void onFailure(Call<Donate> call, Throwable t) {
-                Log.e(TAG, "onFailure: " + t.getMessage());
-            }
-        });
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
     }
 
 }

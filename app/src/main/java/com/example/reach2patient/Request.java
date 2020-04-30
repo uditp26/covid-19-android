@@ -17,7 +17,7 @@ public class Request {
     @SerializedName("bloodgroup")
     private String bloodGroup;
 
-    private long phone;
+
 
     @SerializedName("hospitalphone")
     private long hospitalPhone;
@@ -26,6 +26,7 @@ public class Request {
     private String hospitalEmail;
 
     private String city, date;
+    private long phone;
 
     public Request(int age, Boolean recoveryStatus, String bloodGroup, long phone, long hospitalPhone, String hospitalEmail, String city) {
         this.age = age;

@@ -4,7 +4,7 @@
     <string name="tab_text_2">Donate Blood</string>
     <string name="tab_text_3">Request Blood</string>
     <string name="home_main_head">What is Corona Virus?</string>
-    <string name="home_para1">Corona viruses are a large family of viruses which may cause illness in animals or humans. In humans, several coronaviruses are known to cause respiratory infections ranging from the common cold to more severe diseases such as Middle East Respiratory Syndrome (MERS) and Severe Acute Respiratory Syndrome (SARS). The most recently discovered corona virus causes corona virus disease COVID-19.</string>
+    <string name="home_para1">Corona viruses are a large family of viruses which may cause illness in animals or humans. In humans, several corona viruses are known to cause respiratory infections ranging from the common cold to more severe diseases such as Middle East Respiratory Syndrome (MERS) and Severe Acute Respiratory Syndrome (SARS). The most recently discovered corona virus causes corona virus disease COVID-19.</string>
     <string name="home_sub_head1">How we can help others?</string>
     <string name="home_para2">You can help patients with a severe condition of COVID by donating antibodies in your blood. If you have recovered from COVID-19, you can help other patients by donating your blood. The antibodies developed in your blood will help fight the virus in other patient\'s bodies.</string>
     <string name="home_sub_head2">Do I Need a Test?</string>
@@ -72,12 +72,13 @@
     <string name="request_hint7">Enter your city</string>
     <string name="request_button">Submit</string>
     <string name="request_footer">You may want to post your need for blood plasma on our dashboard, and maybe you get some help. However, always meet or call the potential donor only in a hospital, as he could be having an infection.</string>
-    <string name="main_menu_item1">FAQs</string>
-    <string name="main_menu_item2">Contact</string>
+<!--    <string name="main_menu_item1">FAQs</string>-->
+    <string name="main_menu_item1">Apply for Test</string>
+    <string name="main_menu_item2">Delete Request</string>
     <string name="main_menu_item3">T&amp;Cs</string>
     <string name="main_menu_item4">Consent Letter</string>
-    <string name="main_menu_item5">Apply for Test</string>
-<!--    <string name="main_menu_item6">Make a Call</string>-->
+    <string name="main_menu_item5">Contact</string>
+    <string name="main_menu_item6">Refresh Feed</string>
     <string name="post_main_head">Post Your Need of Plasma</string>
     <string name="post_para1">You can post about your need for blood plasma here. This will let others know about your need and extend a helping hand. You can also see posts by other people below the form. But do not rely entirely on posting your advertisement here. You should also try your best to connect to different hospitals which have treated corona patients.</string>
     <string name="post_field1">Content</string>
@@ -129,4 +130,27 @@
     <string name="test_field3">City</string>
     <string name="test_hint3">Enter city</string>
     <string name="test_button">Submit</string>
+    <string name="delete_main_head">Delete Record</string>
+    <string name="delete_para1">If you successfully donated your blood plasma then, please fill the below form, so we can better utilize your blood and also delete your contact information, and the hospital will also stop reminding you about donating blood. </string>
+    <string name="delete_field1">Phone</string>
+    <string name="delete_hint1">Enter phone here</string>
+    <string name="delete_field2">Blood Group</string>
+    <string-array name="delete_bgroup">
+        <item>A+</item>
+        <item>A-</item>
+        <item>B+</item>
+        <item>B-</item>
+        <item>O+</item>
+        <item>O-</item>
+        <item>AB+</item>
+        <item>AB-</item>
+    </string-array>
+    <string name="delete_field3">Hospital</string>
+    <string name="delete_hint3">Enter hospital name</string>
+    <string name="delete_field4">City</string>
+    <string name="delete_hint4">Enter hospital city</string>
+    <string name="delete_field5">Donation Date</string>
+    <string name="delete_hint5">(YYYY-MM-DD)</string>
+    <string name="delete_button">Submit</string>
+    <string name="delete_footer">Kindly do not entertain phone calls on this issue from any individual until it comes from a hospital. For your safety, try using your own transportation system to go to the hospital which contacted you for blood.</string>
 </resources>
