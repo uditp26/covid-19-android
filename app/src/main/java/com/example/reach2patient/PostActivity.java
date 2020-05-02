@@ -112,7 +112,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
                     if (!response.isSuccessful()){
                         Log.e(TAG, "onResponse: Error: " + response.raw());
-                        Toast.makeText(getBaseContext(), "Invalid input", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(emailET.getRootView().getContext(), "Invalid input", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
@@ -124,7 +124,7 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
                 @Override
                 public void onFailure(Call<Post> call, Throwable t) {
                     Log.e(TAG, "onFailure: " + t.getMessage());
-                    Toast.makeText(getBaseContext(), "Server Unavailable", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(emailET.getRootView().getContext(), "Server Unavailable", Toast.LENGTH_SHORT).show();
                 }
             });
             return true;

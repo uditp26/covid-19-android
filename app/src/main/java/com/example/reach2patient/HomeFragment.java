@@ -151,7 +151,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                 public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
                     if (!response.isSuccessful()){
                         Log.e(TAG, "onResponse: Error: " + response.raw());
-                        Toast.makeText(getActivity(), "Server refused connection", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(recyclerView.getRootView().getContext(), "Server refused connection", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
@@ -211,7 +211,7 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
                 @Override
                 public void onFailure(Call<List<Post>> call, Throwable t) {
                     Log.e(TAG, "onFailure: " + t.getMessage());
-                    Toast.makeText(getActivity(), "Server Unavailable", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(recyclerView.getRootView().getContext(), "Server Unavailable", Toast.LENGTH_SHORT).show();
                 }
             });
 
