@@ -7,12 +7,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 
 import androidx.annotation.NonNull;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.viewpager.widget.ViewPager;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,6 +22,7 @@ import com.example.reach2patient.ui.main.SectionsPagerAdapter;
 public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,8 +82,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.contact:
                 intent = new Intent(getBaseContext(), ContactActivity.class);
                 startActivity(intent);
-                break;
-            case R.id.refresh:
                 break;
             default:
                 return super.onOptionsItemSelected(item);

@@ -146,6 +146,7 @@ public class DonateFragment extends Fragment implements AdapterView.OnItemSelect
 
                     if (!response.isSuccessful()) {
                         Log.e(TAG, "onResponse: Error: " + response.raw());
+                        Toast.makeText(getActivity(), "Invalid input", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
@@ -158,6 +159,7 @@ public class DonateFragment extends Fragment implements AdapterView.OnItemSelect
                 @Override
                 public void onFailure(Call<Donate> call, Throwable t) {
                     Log.e(TAG, "onFailure: " + t.getMessage());
+                    Toast.makeText(getActivity(), "Server Unavailable", Toast.LENGTH_SHORT).show();
                 }
             });
             return true;

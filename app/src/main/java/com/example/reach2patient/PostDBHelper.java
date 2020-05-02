@@ -33,7 +33,8 @@ public class PostDBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        db.execSQL("DROP TABLE IF EXISTS " + BACKUP_TABLE_NAME);
+        onCreate(db);
     }
 
     public void backupPost(int pid, String body, String phone, String timestamp){

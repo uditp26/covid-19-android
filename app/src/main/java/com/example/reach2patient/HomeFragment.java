@@ -1,12 +1,16 @@
 package com.example.reach2patient;
 
+import android.content.Context;
 import android.database.Cursor;
+import android.net.ConnectivityManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -40,9 +44,11 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
     private RecyclerView.Adapter adapter;
     private RecyclerView.LayoutManager layoutManager;
 
-    private SwipeRefreshLayout refreshLayout;
-
     private ArrayList<RecyclerItem> items;
+
+    private TextView emptyView;
+
+    private SwipeRefreshLayout refreshLayout;
 
     PostDBHelper postDBHelper;
 
@@ -59,19 +65,27 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_home, container, false);
         recyclerView = view.findViewById(R.id.recycler_home);
+        emptyView = view.findViewById(R.id.no_posts_view);
+        items = new ArrayList<>();
         refreshLayout = view.findViewById(R.id.swipe_to_refresh);
         refreshLayout.setOnRefreshListener((SwipeRefreshLayout.OnRefreshListener) this);
-        items = new ArrayList<>();
         postDBHelper = new PostDBHelper(getContext());
         retrofit = new Retrofit.Builder()
                 .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         r2pApi = retrofit.create(Reach2PatientApi.class);
+        if(items.isEmpty()){
+            disableRecycler();
+        }
+        else{
+            enableRecycler();
+        }
         recyclerView.setHasFixedSize(true);
         layoutManager = new LinearLayoutManager(getContext());
-        adapter = new RecyclerAdapter(items);
         recyclerView.setLayoutManager(layoutManager);
+        adapter = new RecyclerAdapter(items);
+        recyclerView.setAdapter(adapter);
 
         refreshLayout.post(new Runnable() {
             @Override
@@ -105,18 +119,18 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
         @Override
         protected Void doInBackground(Void... voids) {
             HomeFragment fragment = fragmentWeakReference.get();
-            fragment.getPosts();
+            fragment.getPostsFromServer();
             return null;
         }
-
     }
 
-    public void getPosts(){
+    public void getPostsFromServer(){
         refreshLayout.setRefreshing(true);
+
         ArrayList<RecyclerItem> localItems;
         int pid;
 
-        localItems = fetchBackup();
+        localItems = fetchBackup();    // Check Local DB
 
         if(localItems.isEmpty()){        // Local DB is empty
             pid = 0;
@@ -125,48 +139,105 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
             pid = localItems.get(0).getId();
         }
 
-        Call<List<Post>> call = r2pApi.getPosts(pid);
+        if(isNetworkConnected()){
 
-        call.enqueue(new Callback<List<Post>>() {
-            ArrayList<RecyclerItem> freshItems;
-            boolean flag = false;
+            Call<List<Post>> call = r2pApi.getPosts(pid);
 
-            @Override
-            public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
-                if (!response.isSuccessful()){
-                    Log.e(TAG, "onResponse: Error: " + response.raw());
-                    return;
-                }
+            call.enqueue(new Callback<List<Post>>() {
+                ArrayList<RecyclerItem> freshItems;
+                boolean flag = false;
 
-                List<Post> posts = response.body();
-
-                if (!posts.isEmpty()){      // New posts from server fetched
-                    for (Post post : posts){
-                        Log.d(TAG, "Post Id: " + post.getId());
-                        String parsedTime = parseDateTime(post);
-                        postDBHelper.backupPost(post.getId(), post.getBody(), Long.toString(post.getPhone()), parsedTime);     // Add the new fetched post to local DB
+                @Override
+                public void onResponse(Call<List<Post>> call, Response<List<Post>> response) {
+                    if (!response.isSuccessful()){
+                        Log.e(TAG, "onResponse: Error: " + response.raw());
+                        Toast.makeText(getActivity(), "Server refused connection", Toast.LENGTH_SHORT).show();
+                        return;
                     }
-                    freshItems = fetchBackup();
-                    flag = true;
-                }
-                if(flag){
-                    Log.d(TAG, "New items fetched from server. Item count: " + freshItems.size());
-                    adapter = new RecyclerAdapter(freshItems);
-                    recyclerView.setAdapter(adapter);
-                }
-                else{
-                    Log.d(TAG, "Using cached items from local DB. Item count: " + localItems.size());
-                    adapter = new RecyclerAdapter(localItems);
-                    recyclerView.setAdapter(adapter);
+
+                    List<Post> posts = response.body();
+
+                    if (!posts.isEmpty()){      // New posts from server fetched
+                        for (Post post : posts){
+                            Log.d(TAG, "Post Id: " + post.getId());
+                            String parsedTime = parseDateTime(post);
+                            postDBHelper.backupPost(post.getId(), post.getBody(), Long.toString(post.getPhone()), parsedTime);     // Add the new fetched post to local DB
+                        }
+                        freshItems = fetchBackup();
+                        flag = true;
+                    }
+                    if(flag){
+                        Log.d(TAG, "New items fetched from server. Item count: " + freshItems.size());
+                        getActivity().runOnUiThread(new Runnable() {
+
+                            @Override
+                            public void run() {
+                                enableRecycler();
+                                adapter = new RecyclerAdapter(freshItems);
+                                recyclerView.setAdapter(adapter);
+                            }
+                        });
+
+                    }
+                    else{
+                        Log.d(TAG, "Using cached items from local DB. Item count: " + localItems.size());
+
+                        if(localItems.isEmpty()){
+
+                            getActivity().runOnUiThread(new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    disableRecycler();
+                                }
+                            });
+
+                        }
+                        else {
+
+                            getActivity().runOnUiThread(new Runnable() {
+
+                                @Override
+                                public void run() {
+                                    enableRecycler();
+                                    adapter = new RecyclerAdapter(localItems);
+                                    recyclerView.setAdapter(adapter);
+                                }
+                            });
+                        }
+                    }
                 }
 
-            }
+                @Override
+                public void onFailure(Call<List<Post>> call, Throwable t) {
+                    Log.e(TAG, "onFailure: " + t.getMessage());
+                    Toast.makeText(getActivity(), "Server Unavailable", Toast.LENGTH_SHORT).show();
+                }
+            });
 
-            @Override
-            public void onFailure(Call<List<Post>> call, Throwable t) {
-                Log.e(TAG, "onFailure: " + t.getMessage());
+        }
+        else{
+            if (pid == 0){
+                getActivity().runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        disableRecycler();
+                    }
+                });
             }
-        });
+            else{
+                getActivity().runOnUiThread(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        enableRecycler();
+                        adapter = new RecyclerAdapter(localItems);
+                        recyclerView.setAdapter(adapter);
+                    }
+                });
+            }
+        }
 
         refreshLayout.setRefreshing(false);
     }
@@ -202,6 +273,22 @@ public class HomeFragment extends Fragment implements View.OnClickListener, Swip
             cursor.close();
         }
         return items;
+    }
+
+    private boolean isNetworkConnected() {
+        ConnectivityManager cm = (ConnectivityManager) getActivity().getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        return cm.getActiveNetworkInfo() != null && cm.getActiveNetworkInfo().isConnected();
+    }
+
+    private void enableRecycler(){
+        recyclerView.setVisibility(View.VISIBLE);
+        emptyView.setVisibility(View.GONE);
+    }
+
+    private void disableRecycler(){
+        emptyView.setVisibility(View.VISIBLE);
+        recyclerView.setVisibility(View.GONE);
     }
 
     @Override

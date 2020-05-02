@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Reach2Patient</string>
-    <string name="tab_text_1">Home</string>
+    <string name="tab_text_1">Feed</string>
     <string name="tab_text_2">Donate Blood</string>
     <string name="tab_text_3">Request Blood</string>
     <string name="home_main_head">What is Corona Virus?</string>
@@ -66,7 +66,7 @@
     <string name="request_hint4">Enter phone</string>
     <string name="request_field5">Hospital\'s Phone</string>
     <string name="request_hint5">Enter hospital\'s phone</string>
-    <string name="request_field6">Hospital\'s email</string>
+    <string name="request_field6">Hospital\'s Email</string>
     <string name="request_hint6">Enter hospital\'s email</string>
     <string name="request_field7">City</string>
     <string name="request_hint7">Enter your city</string>
@@ -153,4 +153,5 @@
     <string name="delete_hint5">(YYYY-MM-DD)</string>
     <string name="delete_button">Submit</string>
     <string name="delete_footer">Kindly do not entertain phone calls on this issue from any individual until it comes from a hospital. For your safety, try using your own transportation system to go to the hospital which contacted you for blood.</string>
+    <string name="no_posts">No Posts Yet!</string>
 </resources>

@@ -22,9 +22,9 @@
         android:title="@string/main_menu_item5"
         app:showAsAction="never"/>
 
-    <item
-        android:id="@+id/refresh"
-        android:title="@string/main_menu_item6"
-        app:showAsAction="never" />
+<!--    <item-->
+<!--        android:id="@+id/refresh"-->
+<!--        android:title="@string/main_menu_item6"-->
+<!--        app:showAsAction="never" />-->
 
 </menu>

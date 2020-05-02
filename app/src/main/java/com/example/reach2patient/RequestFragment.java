@@ -149,6 +149,7 @@ public class RequestFragment extends Fragment implements AdapterView.OnItemSelec
 
                     if (!response.isSuccessful()) {
                         Log.e(TAG, "onResponse: Error: " + response.raw());
+                        Toast.makeText(getActivity(), "Invalid input", Toast.LENGTH_SHORT).show();
                         return;
                     }
 
@@ -161,6 +162,7 @@ public class RequestFragment extends Fragment implements AdapterView.OnItemSelec
                 @Override
                 public void onFailure(Call<Request> call, Throwable t) {
                     Log.e(TAG, "onFailure: " + t.getMessage());
+                    Toast.makeText(getActivity(), "Server Unavailable", Toast.LENGTH_SHORT).show();
                 }
             });
             return true;
