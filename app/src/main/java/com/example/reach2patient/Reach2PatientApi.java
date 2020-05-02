@@ -7,31 +7,30 @@ import retrofit2.http.GET;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
-import retrofit2.http.Query;
 
 public interface Reach2PatientApi {
 
-    @Headers("Authorization: Token b148f948dffafb61a9f5421335e41a6f39dcd91d")
+    @Headers("Authorization: Token 9b1155fbd0d5db4f5a21dd013e8882ab0ee41cd7")
     @GET("posts/{id}/")
     Call<List<Post>> getPosts(@Path("id") Integer id);
 
-    @Headers("Authorization: Token b148f948dffafb61a9f5421335e41a6f39dcd91d")
+    @Headers("Authorization: Token 9b1155fbd0d5db4f5a21dd013e8882ab0ee41cd7")
     @POST("posts/")
     Call<Post> createPost(@Body Post post);
 
-    @Headers("Authorization: Token b148f948dffafb61a9f5421335e41a6f39dcd91d")
+    @Headers("Authorization: Token 9b1155fbd0d5db4f5a21dd013e8882ab0ee41cd7")
     @POST("donations/")
     Call<Donate> submitDonateForm(@Body Donate formData);
 
-    @Headers("Authorization: Token b148f948dffafb61a9f5421335e41a6f39dcd91d")
+    @Headers("Authorization: Token 9b1155fbd0d5db4f5a21dd013e8882ab0ee41cd7")
     @POST("requests/")
     Call<Request> submitRequestForm(@Body Request formData);
 
-    @Headers("Authorization: Token b148f948dffafb61a9f5421335e41a6f39dcd91d")
+    @Headers("Authorization: Token 9b1155fbd0d5db4f5a21dd013e8882ab0ee41cd7")
     @POST("tests/")
     Call<Test> submitTestForm(@Body Test formData);
 
-    @Headers("Authorization: Token b148f948dffafb61a9f5421335e41a6f39dcd91d")
+    @Headers("Authorization: Token 9b1155fbd0d5db4f5a21dd013e8882ab0ee41cd7")
     @POST("deletions/")
     Call<Delete> submitDeleteRequest(@Body Delete formData);
 

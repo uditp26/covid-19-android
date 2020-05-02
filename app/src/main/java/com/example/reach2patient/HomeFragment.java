@@ -34,7 +34,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class HomeFragment extends Fragment implements View.OnClickListener, SwipeRefreshLayout.OnRefreshListener {
 
     private static final String TAG = "HomeFragment";
-    private static final String BASE_URL = "http://192.168.1.7:8000/login/";
+    private static final String BASE_URL = "http://185.201.9.188:81/C19/login/";
 
     private Retrofit retrofit;
 

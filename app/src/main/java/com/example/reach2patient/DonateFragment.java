@@ -36,7 +36,7 @@ public class DonateFragment extends Fragment implements AdapterView.OnItemSelect
 
     private static final String TAG = "DonateFragment";
 
-    private static final String BASE_URL = "http://192.168.1.7:8000/login/";
+    private static final String BASE_URL = "http://185.201.9.188:81/C19/login/";
 
     private EditText ageET, phoneET, cityET;
     private Spinner bloodGroupSp, recoveryStatusSp;

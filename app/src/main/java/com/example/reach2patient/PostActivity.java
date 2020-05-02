@@ -26,7 +26,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class PostActivity extends AppCompatActivity implements View.OnClickListener {
 
     private static final String TAG = "PostActivity";
-    private static final String BASE_URL = "http://192.168.1.7:8000/login/";
+    private static final String BASE_URL = "http://185.201.9.188:81/C19/login/";
 
     private EditText emailET, postET, phoneET, cityET, stateET, countryET;
 
