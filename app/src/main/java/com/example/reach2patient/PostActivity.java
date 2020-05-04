@@ -78,7 +78,10 @@ public class PostActivity extends AppCompatActivity implements View.OnClickListe
 
         try {
             body = postET.getText().toString();
-            email = emailET.getText().toString();
+            if(emailET.getText() == null)
+                email = "";
+            else
+                email = emailET.getText().toString();
             phone = Long.parseLong(phoneET.getText().toString());
             city = cityET.getText().toString();
             state = stateET.getText().toString();
